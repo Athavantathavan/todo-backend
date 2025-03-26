@@ -8,8 +8,9 @@ return new class extends Migration
 {
     
     public function up(): void
-    {
-        Schema::create('tasks', function (Blueprint $table) {
+    {  
+        if (!Schema::hasTable('tasks')){  
+             Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('title'); 
             $table->string('description'); 
@@ -18,11 +19,13 @@ return new class extends Migration
             $table->foreign('userid')->references('id')->on('user')->onDelete('cascade'); 
             $table->timestamps();
         });
+      }
     }
 
    
     public function down(): void
     {
-       
+        Schema::dropIfExists('tasks');
+
     }
 };

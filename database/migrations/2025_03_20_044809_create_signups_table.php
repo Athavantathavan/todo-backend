@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('user', function (Blueprint $table) {
+        if (!Schema::hasTable('user')){
+             Schema::create('user', function (Blueprint $table) {
             $table->id(); 
             $table->string('name'); 
             $table->string('email')->unique();
@@ -15,9 +16,11 @@ return new class extends Migration {
             $table->timestamps();
         });
     }
+    }
 
     public function down()
     {
-       
+        Schema::dropIfExists('user');
+
     }
 };
